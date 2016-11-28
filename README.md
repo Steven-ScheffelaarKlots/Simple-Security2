@@ -41,3 +41,24 @@ the light number, as well as an on and an off button that currently do nothing a
 has not been implemented.
 
 MainActivity.java - Controls the main navigation of the app such as the tabs and the settings menu
+
+Progress-Report 2
+
+Created the database that contains all of the users light codes. Also populated the light switch
+list using light objects created from the database. Also added functionality to the add light page
+so that it now can actually add new lights. Created the service to send signals to the webserver
+to turn lights on and off, as well as added functionality to the lights list to use this service.
+Began implementing and researching how to schedule the lights to turn on and off at certain times
+and also looked into having the lights turn on at sundown by using an external service that can
+tell the app when sundown will be at your location.
+
+New Java files written by Steven Scheffelaar Klots
+
+DatabaseHandler.java - An interface for all actions that use the database.
+
+HTTPRequest.java - Sends a HTTP request to the web server with the desired signal.
+
+LightSchedulerFragment.java - Currently an empty fragment generator for the Light Scheduling page
+
+SchedulerJobService.java - Pretty much an empty file that contains my experimenting with the
+Android job service.

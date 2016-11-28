@@ -19,12 +19,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:text="On" />
+        tools:text="On"
+        android:text="@string/on_button"/>
 
     <Button
         android:id="@+id/light_off_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:text="Off" />
+        tools:text="Off"
+        android:text="@string/off_button"/>
 </LinearLayout>

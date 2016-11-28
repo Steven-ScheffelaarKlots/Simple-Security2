@@ -5,20 +5,29 @@ package com.stevenscheffelaar.simple_security;
  */
 
 public class Light {
-    private int mLightNum;
-    private String mOnCode;
-    private String mOffCode;
+    private int LightNum;
+    private String OnCode;
+    private String OffCode;
 
+    public Light() {
 
-    public Light(int lightNum, String onCode, String offCode) {
-        mLightNum =lightNum;
-        mOnCode = onCode;
-        mOffCode = offCode;
     }
 
-    public int getLightNum() { return mLightNum; }
+    public Light(int lightNum, String onCode, String offCode) {
+        this.LightNum =lightNum;
+        this.OnCode = onCode;
+        this.OffCode = offCode;
+    }
 
-    public String getOnCode() { return mOnCode; }
+    public int getLightNum() { return this.LightNum; }
 
-    public String getOffCode() { return mOffCode; }
+    public void setLightNum(int num) { this.LightNum = num; }
+
+    public String getOnCode() { return this.OnCode; }
+
+    public void setOnCode(String code) { this.OnCode = code; }
+
+    public String getOffCode() { return this.OffCode; }
+
+    public void  setOffCode(String code) { this.OffCode = code; }
 }
