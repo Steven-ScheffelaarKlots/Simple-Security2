@@ -62,3 +62,17 @@ LightSchedulerFragment.java - Currently an empty fragment generator for the Ligh
 
 SchedulerJobService.java - Pretty much an empty file that contains my experimenting with the
 Android job service.
+
+Progress-Report 3
+
+Worked on the scheduling for turning on and off the lights at specified times as well as
+created a service for querying an API to determine when sundown is for the user and schedules
+the lights to turn on at that time. No real UI work was done and all the work was focused
+on making the services work.
+
+New Java Files written by Steven Scheffelaar Klots
+
+ScheduledLightSignalService.java - Service for sending a signal to a light at a specified time.
+
+DaylightApiRequest.java - Service that gets the sundown time using an API and schedules all lights
+to turn on when sundown occurs.

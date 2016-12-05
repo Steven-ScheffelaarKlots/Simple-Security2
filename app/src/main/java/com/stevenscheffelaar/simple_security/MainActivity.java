@@ -1,11 +1,12 @@
 package com.stevenscheffelaar.simple_security;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,7 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import java.util.concurrent.TimeUnit;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,7 +44,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.e("MAIN", db.getAllLights().toString());
+
+
+        JobScheduler mJobScheduler = (JobScheduler)
+                getSystemService(Context.JOB_SCHEDULER_SERVICE);
+
+        JobInfo jobInfo = new JobInfo.Builder(1, new ComponentName( getPackageName(),
+                SchedulerJobService.class.getName()))
+                .setRequiresCharging(true)
+                .setPeriodic(TimeUnit.DAYS.toMillis(1))
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .build();
+
+        int result = mJobScheduler.schedule(jobInfo);
+        if (result == JobScheduler.RESULT_SUCCESS) Log.d("MAIN", "Job scheduled successfully!");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

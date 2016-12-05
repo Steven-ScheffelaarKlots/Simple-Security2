@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -35,12 +36,23 @@ public class LightAdapter extends ArrayAdapter<Light> {
             @Override
             public void onClick(View v) {
                 new HTTPRequest().execute(currentLight.getOnCode());
+
+                Context context = (getContext().getApplicationContext());
+                CharSequence text = "Light Turned On";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
         });
         offBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 new HTTPRequest().execute(currentLight.getOffCode());
+                Context context = (getContext().getApplicationContext());
+                CharSequence text = "Light Turned Off";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
         });
 

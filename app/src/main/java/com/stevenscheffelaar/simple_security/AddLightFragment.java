@@ -1,5 +1,6 @@
 package com.stevenscheffelaar.simple_security;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by Steven on 11/16/2016.
@@ -35,6 +37,12 @@ public class AddLightFragment extends Fragment{
                     DatabaseHandler db = new  DatabaseHandler(getActivity());
                     int newNum = db.getLightCount() + 1;
                     db.addLight(new Light(newNum, on_signal.getText().toString(), off_signal.getText().toString()));
+
+                    Context context = (getContext().getApplicationContext());
+                    CharSequence text = "New Light Added";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                 }
             }
         );
