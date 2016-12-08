@@ -1,11 +1,13 @@
 package com.stevenscheffelaar.simple_security;
 
+import android.app.Activity;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -23,16 +25,35 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import static android.R.attr.duration;
+import static java.security.AccessController.getContext;
+
 /**
  * Created by Steven on 12/4/2016.
  */
 
-public class DaylightApiRequest extends AsyncTask <String, Void, String>{
+public class DaylightApiRequest extends AsyncTask <String, Void, Integer>{
     private  final String TAG = DaylightApiRequest.class.getName();
     String response = "";
+    Date convertedDate = new Date();
+    Context mContext;
+
+    public interface AsyncResponse {
+        void processFinish(Integer output);
+    }
 
 
-    protected String doInBackground(String ... strings){
+    public AsyncResponse delegate = null;
+
+    public DaylightApiRequest(Context context, AsyncResponse delegate){
+        this.delegate = delegate;
+        mContext = context;
+    }
+
+
+    protected Integer doInBackground(String ... strings){
+
+        int sundown = 0;
 
         HttpURLConnection urlConnection = null;
         try {
@@ -43,30 +64,24 @@ public class DaylightApiRequest extends AsyncTask <String, Void, String>{
 
             if(responseCode == HttpURLConnection.HTTP_OK){
                 response = readStream(urlConnection.getInputStream());
-//                Log.v("CatalogClient", response);
                 try {
                     JSONObject requestResponse = new JSONObject(response);
                     String sundownTime = requestResponse.getJSONObject("results").getString("sunset");
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
-                    Date convertedDate = new Date();
+
                     try {
                         convertedDate = dateFormat.parse(sundownTime);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
 
-                    Period period = new Period(DateTime.now(), new DateTime(convertedDate));
-                    Log.e(TAG, "This is teh thign " + period.getMillis());
-                    JobScheduler mJobScheduler = (JobScheduler)
-                            Context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+                    int period = new Period(DateTime.now(), new DateTime(convertedDate)).getMillis();
+                    if (period > 0) {
+                        sundown = period;
+                    } else {
+                        sundown = 10;
+                    }
 
-                    JobInfo jobInfo = new JobInfo.Builder(1, new ComponentName( getPackageName(),
-                            SchedulerJobService.class.getName()))
-                            .setRequiresCharging(true)
-                            .setPeriodic(period.getMillis())
-                            .build();
-
-                    mJobScheduler.schedule(jobInfo);
                 }
                 catch (JSONException exception){
 
@@ -77,7 +92,7 @@ public class DaylightApiRequest extends AsyncTask <String, Void, String>{
         {
 
         } catch (IOException exception) {}
-        return null;
+        return sundown;
     }
 
     private String readStream(InputStream is) throws IOException {
@@ -91,9 +106,10 @@ public class DaylightApiRequest extends AsyncTask <String, Void, String>{
     }
 
     @Override
-    protected void onPostExecute(String s) {
+    protected void onPostExecute(Integer s) {
         super.onPostExecute(s);
-        Log.e("Response", "" + response);
+        Toast.makeText(mContext, "Sundown is at " + convertedDate.toString() , Toast.LENGTH_LONG).show();
+        delegate.processFinish(s);
     }
 }
 

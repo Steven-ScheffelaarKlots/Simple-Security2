@@ -31,12 +31,14 @@ public class AddLightFragment extends Fragment{
         Button submit = (Button) rootView.findViewById(R.id.submit_light);
         final EditText off_signal = (EditText) rootView.findViewById(R.id.off_signal);
         final EditText on_signal = (EditText) rootView.findViewById(R.id.on_signal);
+        final EditText name = (EditText) rootView.findViewById(R.id.name);
         submit.setOnClickListener(
             new View.OnClickListener() {
                 public void onClick (View view){
                     DatabaseHandler db = new  DatabaseHandler(getActivity());
                     int newNum = db.getLightCount() + 1;
-                    db.addLight(new Light(newNum, on_signal.getText().toString(), off_signal.getText().toString()));
+                    db.addLight(new Light(newNum, on_signal.getText().toString(),
+                            off_signal.getText().toString(),name.getText().toString() ));
 
                     Context context = (getContext().getApplicationContext());
                     CharSequence text = "New Light Added";

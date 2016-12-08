@@ -4,6 +4,7 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
+import android.nfc.Tag;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -46,18 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        JobScheduler mJobScheduler = (JobScheduler)
-                getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
-        JobInfo jobInfo = new JobInfo.Builder(1, new ComponentName( getPackageName(),
-                SchedulerJobService.class.getName()))
-                .setRequiresCharging(true)
-                .setPeriodic(TimeUnit.DAYS.toMillis(1))
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .build();
-
-        int result = mJobScheduler.schedule(jobInfo);
-        if (result == JobScheduler.RESULT_SUCCESS) Log.d("MAIN", "Job scheduled successfully!");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

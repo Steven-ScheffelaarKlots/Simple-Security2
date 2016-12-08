@@ -1,7 +1,9 @@
 package com.stevenscheffelaar.simple_security;
 
 import android.app.job.JobParameters;
+import android.app.job.JobScheduler;
 import android.app.job.JobService;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -17,7 +19,7 @@ public class SchedulerJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
         mJobHandler.sendMessage( Message.obtain( mJobHandler, 1, params ) );
-        new DaylightApiRequest().execute();
+        new HTTPRequest().execute("12345");
         return true;
     }
 

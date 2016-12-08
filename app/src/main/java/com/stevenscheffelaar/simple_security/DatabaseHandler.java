@@ -20,6 +20,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String TABLE_LIGHTS = "lights";
 
+    private static final String KEY_LIGHT_NAME = "name";
     private static final String KEY_LIGHT_NUM = "id";
     private static final String KEY_ON_CODE = "on_code";
     private static final String KEY_OFF_CODE = "off_code";
@@ -31,7 +32,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void  onCreate(SQLiteDatabase db) {
         String CREATE_LIGHT_TABLE = "CREATE TABLE " + TABLE_LIGHTS + "(" + KEY_LIGHT_NUM +
-                " INTEGER PRIMARY KEY, " + KEY_ON_CODE + " TEXT, " + KEY_OFF_CODE + " TEXT)";
+                " INTEGER PRIMARY KEY, " + KEY_ON_CODE + " TEXT, " + KEY_OFF_CODE + " TEXT," +
+                KEY_LIGHT_NAME +  " TEXT)";
         db.execSQL(CREATE_LIGHT_TABLE);
     }
 
@@ -47,6 +49,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_LIGHT_NUM, light.getLightNum());
         values.put(KEY_ON_CODE, light.getOnCode());
         values.put(KEY_OFF_CODE, light.getOffCode());
+        values.put(KEY_LIGHT_NAME, light.getLightName());
 
         db.insert(TABLE_LIGHTS, null, values);
         db.close(); // Closing database connection
@@ -55,13 +58,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Light getLight(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_LIGHTS, new String[] { KEY_LIGHT_NUM,
-                        KEY_ON_CODE, KEY_OFF_CODE }, KEY_LIGHT_NUM + "=?",
+                        KEY_ON_CODE, KEY_OFF_CODE, KEY_LIGHT_NAME }, KEY_LIGHT_NUM + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         Light light = new Light(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3));
 
         return light;
     }
@@ -79,6 +82,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 light.setLightNum(Integer.parseInt(cursor.getString(0)));
                 light.setOnCode(cursor.getString(1));
                 light.setOffCode(cursor.getString(2));
+                light.setLightName(cursor.getString(3));
                 // Adding contact to list
                 lightList.add(light);
             } while (cursor.moveToNext());
@@ -105,6 +109,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_ON_CODE, light.getOnCode());
         values.put(KEY_OFF_CODE, light.getOffCode());
+        values.put(KEY_LIGHT_NAME, light.getLightName());
 
         // updating row
         return db.update(TABLE_LIGHTS, values, KEY_LIGHT_NUM + " = ?",

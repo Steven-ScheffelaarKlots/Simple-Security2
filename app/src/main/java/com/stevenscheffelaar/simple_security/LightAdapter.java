@@ -27,7 +27,7 @@ public class LightAdapter extends ArrayAdapter<Light> {
         final Light currentLight = getItem(position);
 
         TextView lightNumberTextView = (TextView) listItemView.findViewById(R.id.light_number_text_view);
-        lightNumberTextView.setText(String.valueOf(currentLight.getLightNum()));
+        lightNumberTextView.setText(String.valueOf(currentLight.getLightName()));
 
         Button offBtn = (Button)listItemView.findViewById(R.id.light_off_text_view);
         Button onBtn = (Button)listItemView.findViewById(R.id.light_on_text_view);

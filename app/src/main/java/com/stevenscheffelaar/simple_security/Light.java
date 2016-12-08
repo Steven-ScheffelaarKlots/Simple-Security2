@@ -8,15 +8,17 @@ public class Light {
     private int LightNum;
     private String OnCode;
     private String OffCode;
+    private String LightName;
 
     public Light() {
 
     }
 
-    public Light(int lightNum, String onCode, String offCode) {
+    public Light(int lightNum, String onCode, String offCode, String name) {
         this.LightNum =lightNum;
         this.OnCode = onCode;
         this.OffCode = offCode;
+        this.LightName = name;
     }
 
     public int getLightNum() { return this.LightNum; }
@@ -30,4 +32,8 @@ public class Light {
     public String getOffCode() { return this.OffCode; }
 
     public void  setOffCode(String code) { this.OffCode = code; }
+
+    public String getLightName() { return  this.LightName; }
+
+    public void setLightName(String name) { this.LightName = name; }
 }
