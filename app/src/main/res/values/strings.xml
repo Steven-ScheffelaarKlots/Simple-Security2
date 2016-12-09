@@ -2,4 +2,6 @@
     <string name="app_name">Simple-Security</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="on_button">On</string>
+    <string name="off_button">Off</string>
 </resources>

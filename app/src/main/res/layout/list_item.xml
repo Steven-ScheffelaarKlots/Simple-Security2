@@ -3,28 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:gravity="bottom"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/light_number_text_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight=".2"
-        tools:text="lutti" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/light_on_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:text="On" />
+        <TextView
+            android:id="@+id/light_number_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="lutti" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/light_off_text_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        tools:text="Off" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/light_on_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="On"
+            android:text="@string/on_button"/>
+
+        <Button
+            android:id="@+id/light_off_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="Off"
+            android:text="@string/off_button"/>
+    </LinearLayout>
 </LinearLayout>
